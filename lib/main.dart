@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: <Widget>[
             Question(
-              questions[_questionIndex],
+              questionText: questions[_questionIndex],
             ),
             ElevatedButton(
               onPressed: () => answerQuestion(),
