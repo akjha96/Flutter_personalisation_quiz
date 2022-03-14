@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 //custom widget
 import 'question.dart';
+import 'answer.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,7 +27,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    void answerQuestion() {
+    void _answerQuestion() {
       if (_questionIndex < questions.length - 1) {
         setState(() {
           _questionIndex += 1;
@@ -47,20 +48,9 @@ class _MyAppState extends State<MyApp> {
             Question(
               questionText: questions[_questionIndex],
             ),
-            ElevatedButton(
-              onPressed: () => answerQuestion(),
-              child: Text('Answer 1'),
-            ),
-            ElevatedButton(
-              onPressed: () => answerQuestion(),
-              child: Text('Answer 2'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                print('Answer 3');
-              },
-              child: Text('Answer 3'),
-            ),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
           ],
         ),
       ),
