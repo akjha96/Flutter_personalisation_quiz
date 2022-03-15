@@ -20,7 +20,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _questionIndex = 0;
 
-  final questions = [
+  static const questions = [
     {
       'questionText': 'What\'s your favourite color?',
       'answers': ['Blue', 'White', 'Green', 'Orange'],
@@ -38,14 +38,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     void _answerQuestion() {
-      if (_questionIndex < questions.length - 1) {
-        setState(() {
-          _questionIndex += 1;
-        });
-        print(_questionIndex);
-      } else {
-        print('Maximum number of questions reached: ${_questionIndex + 1}');
-      }
+      setState(() {
+        _questionIndex += 1;
+      });
     }
 
     return MaterialApp(
@@ -53,17 +48,29 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('My First App'),
         ),
-        body: Column(
-          children: <Widget>[
-            Question(
-              questionText: questions[_questionIndex]['questionText'] as String,
-            ),
-            ...(questions[_questionIndex]['answers'] as List<String>)
-                .map((answer) {
-              return Answer(_answerQuestion, answer);
-            }).toList(),
-          ],
-        ),
+        body: _questionIndex < questions.length
+            ? Column(
+                children: <Widget>[
+                  Question(
+                    questionText:
+                        questions[_questionIndex]['questionText'] as String,
+                  ),
+                  ...(questions[_questionIndex]['answers'] as List<String>)
+                      .map((answer) {
+                    return Answer(_answerQuestion, answer);
+                  }).toList(),
+                ],
+              )
+            : const Center(
+                child: Text(
+                  'You completed the trial of Life!',
+                  style: TextStyle(
+                    color: Color.fromARGB(204, 14, 25, 37),
+                    fontSize: 27,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
       ),
     );
   }
