@@ -5,7 +5,7 @@ import 'question.dart';
 import 'answer.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -21,8 +21,18 @@ class _MyAppState extends State<MyApp> {
   int _questionIndex = 0;
 
   final questions = [
-    'What\'s your favourite color?',
-    'What\'s your favourite animal?',
+    {
+      'questionText': 'What\'s your favourite color?',
+      'answers': ['Blue', 'White', 'Green', 'Orange'],
+    },
+    {
+      'questionText': 'What\'s your favourite animal?',
+      'answers': ['Tiger', 'Lion', 'Tortoise', 'Rabbit'],
+    },
+    {
+      'questionText': 'Who\'s your favourite Instructor?',
+      'answers': ['Andrei', 'Max', 'Angela', 'Yihua'],
+    },
   ];
 
   @override
@@ -46,11 +56,12 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: <Widget>[
             Question(
-              questionText: questions[_questionIndex],
+              questionText: questions[_questionIndex]['questionText'] as String,
             ),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
+            ...(questions[_questionIndex]['answers'] as List<String>)
+                .map((answer) {
+              return Answer(_answerQuestion, answer);
+            }).toList(),
           ],
         ),
       ),
