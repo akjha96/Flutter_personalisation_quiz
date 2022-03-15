@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 //custom widget
-import 'question.dart';
-import 'answer.dart';
+import 'quiz.dart';
+import 'result.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -20,7 +18,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _questionIndex = 0;
 
-  static const questions = [
+  static const _questions = [
     {
       'questionText': 'What\'s your favourite color?',
       'answers': ['Blue', 'White', 'Green', 'Orange'],
@@ -48,29 +46,12 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('My First App'),
         ),
-        body: _questionIndex < questions.length
-            ? Column(
-                children: <Widget>[
-                  Question(
-                    questionText:
-                        questions[_questionIndex]['questionText'] as String,
-                  ),
-                  ...(questions[_questionIndex]['answers'] as List<String>)
-                      .map((answer) {
-                    return Answer(_answerQuestion, answer);
-                  }).toList(),
-                ],
-              )
-            : const Center(
-                child: Text(
-                  'You completed the trial of Life!',
-                  style: TextStyle(
-                    color: Color.fromARGB(204, 14, 25, 37),
-                    fontSize: 27,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ),
+        body: _questionIndex < _questions.length
+            ? Quiz(
+                questions: _questions,
+                answerQuestion: _answerQuestion,
+                questionIndex: _questionIndex)
+            : const Result(),
       ),
     );
   }
